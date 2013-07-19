@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 WE'RE DOIN' IT BROS ! WE'RE DOIN' IT !!!
+=======
+yo
+c'est monsieur.C
+>>>>>>> 51ea7509935fbc7da04221a743a8d66557e2b343
