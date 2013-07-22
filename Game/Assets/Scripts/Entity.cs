@@ -14,6 +14,7 @@ public class Entity : MonoBehaviour {
 		tagsCollided.Add("Green", false);
 		tagsCollided.Add("Yellow", false);
 		tagsCollided.Add("Black", false);
+		tagsCollided.Add("Orange", false);
 	}
 	
 	// Update is called once per frame
