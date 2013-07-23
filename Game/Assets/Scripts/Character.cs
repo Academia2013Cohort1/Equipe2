@@ -17,6 +17,7 @@ public class Character : Entity {
 	private float immunityTimer = 0f;
 	private bool immunity = false;
 	private GameObject [] platforms;
+	private bool usedGravity = false;
 	
 	// Use this for initialization
 	new void Start () {
@@ -43,11 +44,29 @@ public class Character : Entity {
 	void FixedUpdate () {
 		//movment
 		if(Input.GetKey(KeyCode.A)) {
-			rigidbody.velocity = new Vector3(-curSpeed, rigidbody.velocity.y, 0);	
+			rigidbody.velocity = new Vector3(-curSpeed, rigidbody.velocity.y, 0);
+			renderer.material.mainTextureScale = new Vector2(1f, -1f);
 		} else if(Input.GetKey(KeyCode.D)) {
-			rigidbody.velocity = new Vector3(curSpeed, rigidbody.velocity.y, 0);	
+			rigidbody.velocity = new Vector3(curSpeed, rigidbody.velocity.y, 0);
+			renderer.material.mainTextureScale = new Vector2(-1f, -1f);
 		} else {
 			rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+		}
+		
+		if(!rigidbody.useGravity) {
+			if(Input.GetKey(KeyCode.W)) {
+				rigidbody.velocity = new Vector3(rigidbody.velocity.x, curSpeed, 0);
+			} else if(Input.GetKey(KeyCode.S)) {
+				rigidbody.velocity = new Vector3(rigidbody.velocity.x, -curSpeed, 0);
+			} else {
+				rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, 0);
+			}
+			
+			if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D)) {
+				rigidbody.velocity = new Vector3(0, rigidbody.velocity.y, 0);
+			}
+		} else if(!usedGravity) {
+			rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, 0);
 		}
 		
 		if(Input.GetKey(KeyCode.LeftShift)) {
@@ -79,7 +98,7 @@ public class Character : Entity {
 			}
 		}
 		
-		Debug.Log(tagsCollided["Blue"]);
+		usedGravity = rigidbody.useGravity;
 	}
 	
 	public void UpdateImmunity() {
@@ -125,7 +144,7 @@ public class Character : Entity {
 	}
 	
 	public int GetMaxHealth() {
-		return maxHealth;	
+		return maxHealth;
 	}
 	
 	void OnTriggerEnter(Collider c) {
@@ -133,5 +152,15 @@ public class Character : Entity {
 			Destroy(c.gameObject);
 			cDisp.AddCoins(1);
 		}
+		
+		if(c.tag == "Light Green") {
+			rigidbody.useGravity = false;
+		}
     }
+	
+	void OnTriggerExit(Collider c) {
+		if(c.tag == "Light Green") {
+			rigidbody.useGravity = true;
+		}
+	}
 }
