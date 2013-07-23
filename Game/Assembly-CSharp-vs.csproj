@@ -46,7 +46,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraMovment.cs" />
      <Compile Include="Assets\Scripts\Character.cs" />
+     <Compile Include="Assets\Scripts\CoinDisplay.cs" />
      <Compile Include="Assets\Scripts\Entity.cs" />
+     <Compile Include="Assets\Scripts\HealthDisplay.cs" />
      <Compile Include="Assets\Scripts\PhysicsManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
